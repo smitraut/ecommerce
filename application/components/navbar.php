@@ -14,14 +14,14 @@
                     <a class="nav-link" href="<?php echo base_url('Home'); ?>" style="color: #FFFFFF;">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url('Products/displayProducts'); ?>" style="color: #FFFFFF;">Products</a>
+                    <a class="nav-link" href="<?php echo base_url('Products'); ?>" style="color: #FFFFFF;">Products</a>
                 </li>
                 <?php if ($this->session->userdata('logged_in')) : ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('AddProduct'); ?>" style="color: #FFFFFF;">Add Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('Dashboard/displayUsers'); ?>" style="color: #FFFFFF;">Dashboard</a>
+                        <a class="nav-link" href="<?php echo base_url('dashboard'); ?>" style="color: #FFFFFF;">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('Logout/logout'); ?>" style="color: #FFFFFF;">Logout</a>

@@ -54,5 +54,9 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['products'] = 'products/displayProducts';
 
+$route['dashboard'] = 'dashboard/displayUsers';
+$route['AddProduct'] = 'AddProduct/addProduct';
+$route['Products'] = 'Products/displayProducts';
+
 
 

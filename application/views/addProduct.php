@@ -18,7 +18,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-8 col-xl-6">
                                 <h1 class="text-center fw-bold mb-5 mx-1 mx-md-4 mt-4">Add Product</h1>
-                                <form class="mx-1 mx-md-4" method="post" action="<?= base_url('AddProduct/addProduct'); ?>" enctype="multipart/form-data">
+                                <form class="mx-1 mx-md-4" method="post" action="<?= base_url('AddProduct'); ?>" enctype="multipart/form-data">
                                     <div class="form-outline mb-4">
                                         <input type="text" name="product_name" id="product_name" class="form-control" required />
                                         <label class="form-label" for="product_name">Product Name</label>
