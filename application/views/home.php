@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         /* Custom styles specific to the home page */
         body {
@@ -12,7 +11,7 @@
             font-family: Arial, sans-serif;
         }
         .hero-section {
-            background-color: #007bff;
+            background-color: blue;
             color: white;
             padding: 100px 0;
             text-align: center;
@@ -129,6 +128,5 @@
 <?php $this->load->view('../components/footer'); ?>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-dZkp3KLW0QL4I5fFkU8aTaAq+SQ0ja09yJ3J5XfFWy6PK0KGKv3KkPZ6h+3h2QO8" crossorigin="anonymous"></script>
 </body>
 </html>

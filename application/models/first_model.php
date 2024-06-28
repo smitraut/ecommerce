@@ -58,20 +58,9 @@ class first_model extends CI_Model {
     }
 
 
-
-
-
-	
-
-
-
-
-	// // GET ALL USERS FROM DATABASE
-	// function getUsers() {
-	// 	$this->db->select('*');
-	// 	$this->db->from('login');
-	// 	$query = $this->db->get();
-	// 	$result = $query->result();
-	// 	return $result;
-	// }
+	// GET ALL USERS FROM DATABASE
+	function getUsers() {
+		$query = $this->db->get('users');
+		return $query->result_array();
+	}
 }

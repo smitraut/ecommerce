@@ -1,6 +1,6 @@
-<!-- Navbar -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    <title>Products</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+<!-- Navbar -->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -21,7 +21,7 @@
                         <a class="nav-link" href="<?php echo base_url('AddProduct'); ?>" style="color: #FFFFFF;">Add Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('Dashboard'); ?>" style="color: #FFFFFF;">Dashboard</a>
+                        <a class="nav-link" href="<?php echo base_url('Dashboard/displayUsers'); ?>" style="color: #FFFFFF;">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('Logout/logout'); ?>" style="color: #FFFFFF;">Logout</a>
@@ -38,3 +38,4 @@
         </div>
     </div>
 </nav>
+

@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard </title>
-</head>
-
-
-
-<body>
-<style>
+    <title>Dashboard</title>
+    <style>
         .user-card {
             transition: transform 0.3s;
         }
@@ -18,6 +13,9 @@
             transform: scale(1.05);
         }
     </style>
+</head>
+<body>
+
 <?php $this->load->view('../components/navbar'); ?>
 
 <!-- Main Content -->
@@ -43,14 +41,14 @@
                 <div class="col">
                     <div class="card h-100 shadow user-card">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $user['username']; ?></h5>
+                            <h5 class="card-title"><?php echo $user['first_name']; ?></h5>
                             <p class="card-text">Email: <?php echo $user['email']; ?></p>
-                            <p class="card-text">Role: <?php echo $user['role']; ?></p>
+                            <!-- Add more fields as needed -->
                         </div>
                         <div class="card-footer">
                             <div class="btn-group">
-                                <a href="<?php echo base_url('dashboard/editUser/' . $user['user_id']); ?>" class="btn btn-primary">Edit</a>
-                                <a href="<?php echo base_url('dashboard/deleteUser/' . $user['user_id']); ?>" class="btn btn-danger">Delete</a>
+                                <a href="<?php echo base_url('dashboard/editUser/' . $user['id']); ?>" class="btn btn-primary">Edit</a>
+                                <a href="<?php echo base_url('dashboard/deleteUser/' . $user['id']); ?>" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -63,10 +61,8 @@
 
 </div>
 
-<!-- Bootstrap JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zkpK7IhF8B1RMpZv3uVq2mhJfpJhgiCGF08J2E0sFpA3sTiGCjGpvwL3IF+J5R0F" crossorigin="anonymous"></script>
-
 <?php $this->load->view('../components/footer'); ?>
+
 
 </body>
 </html>
