@@ -3,19 +3,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Register extends CI_Controller {
 
+	public function __construct() {
+		parent::__construct();
 	
-    public function __construct() {
-        parent::__construct();
-        
-		//loads the model
-        $this->load->model('first_model'); 
-
-		// Load session library
+		// Load necessary libraries and helpers
+		$this->load->model('first_model'); 
 		$this->load->library('session');
-
-		// Load other necessary libraries or helpers
 		$this->load->helper('url');
-    }
+	
+		// Allow CORS for specific origin
+		header('Access-Control-Allow-Origin: http://localhost:8100');
+		header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+		header('Access-Control-Allow-Headers: Content-Type, Authorization');
+		header('Access-Control-Allow-Credentials: true');
+	
+		// Respond to preflight requests
+		if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+			header('HTTP/1.1 200 OK');
+			exit();
+		}
+	}
+	
 
 	// LOADS THE VIEW
 	public function index()
@@ -48,34 +56,40 @@ class Register extends CI_Controller {
 			}
 	}
 
-	// // USER REGISTRATION IN DATABASE IN BOTH TABLES REGISTER AND LOGIN (APP)
-	// public function registerUsersApp() 
-	// {
-	// 	//register
-	// 	$request_data = $this->json_data();
-	// 	$users['first_name'] = $request_data['first_name'];
-	// 	$users['last_name'] = $request_data['last_name'];
-	// 	$users['phone_number'] = $request_data['phone_number'];
-	// 	$users['email'] = $request_data['email'];
-	// 	$users['password'] = $request_data['password'];
+	// USER REGISTRATION IN DATABASE IN BOTH TABLES REGISTER AND LOGIN (APP)
+	public function registerUsersApp() 
+{
+    $request_data = $this->json_data();
+    
+    $users = array(
+        'first_name' => $request_data['first_name'],
+        'last_name' => $request_data['last_name'],
+        'phone_number' => $request_data['phone_number'],
+        'email' => $request_data['email'],
+        'password' => $request_data['password']
+    );
 
-	// 	//login
-	// 	$login['email'] = $request_data['email'];
-	// 	$login['password'] = $request_data['password'];
+    $login = array(
+        'email' => $request_data['email'],
+        'password' => $request_data['password']
+    );
 
-	// 	$response = $this->first_model->saveUsers($users, $login);
+    log_message('debug', 'Request data: ' . json_encode($request_data));
 
-	// 	if ($response == true) {
-	// 		$response = array(
-	// 			'status' => 'success',
-	// 			'message' => 'User registered successfully'
-	// 		);
-	// 	} else {
-	// 		$response = array(
-	// 			'status' => 'error',
-	// 			'message' => 'User registration failed'
-	// 		);
-	// 	}
-	// 	echo json_encode($response);
-	// }
+    $response = $this->first_model->saveUsers($users, $login);
+
+    log_message('debug', 'Response data: ' . json_encode($response));
+
+    $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($response));
+}
+
+	 // Utility function to parse JSON data from the request body
+	 private function json_data() {
+        header('Content-type: application/json');
+        $json_request_data = file_get_contents("php://input");
+        return json_decode($json_request_data, true);
+	}
+
 }

@@ -6,6 +6,12 @@ class Login extends CI_Controller {
 	
 	public function __construct() {
         parent::__construct();
+		//CORS middleware
+		header('Access-Control-Allow-Origin: http://localhost:8100'); 
+		header('Access-Control-Allow-Origin: http://192.168.0.27:8100');
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Authorization');
+        header('Access-Control-Allow-Credentials: true');
 
 		//loads the model
         $this->load->model('first_model'); 
@@ -22,6 +28,7 @@ class Login extends CI_Controller {
 	{
 		$this->load->view('login');
 	}
+
 
 
 	public function checkLoginErp()
@@ -43,25 +50,30 @@ class Login extends CI_Controller {
 		}
 	}
 
-
+	
 	// CHECKS IF USER IS REGISTERED IN DATABASE (APP)
-	public function checkLoginApp()
-	{
-		$json_data = $this->json_data();
+    public function checkLoginApp() {
+        $json_data = $this->json_data();
 
-		$login['email']=$json_data['email'];
-		$login['password']=$json_data['password'];
+        $login['email'] = $json_data['email'];
+        $login['password'] = $json_data['password'];
 
-		$result=$this->first_model->checkUsers($login);
+        $result = $this->first_model->checkUsers($login);
 
-		if ($result) {
+        if ($result) {
             $response["response"] = "success";
-			$response["data"] =$result;
+            $response["data"] = $result;
         } else {
             $response["response"] = "error";
         }
 
- 		 echo json_encode($response);
-	}
+        echo json_encode($response);
+    }
 
+    // Utility function to parse JSON data from the request body
+    private function json_data() {
+        header('Content-type: application/json');
+        $json_request_data = file_get_contents("php://input");
+        return json_decode($json_request_data, true);
+	}
 }

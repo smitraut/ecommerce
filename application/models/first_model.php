@@ -14,22 +14,35 @@ class first_model extends CI_Model {
 
     // Check for duplicate email and phone_number
 	function saveUsers($users, $login) {
-		
-    $this->db->where('email', $users['email']);
-    $this->db->or_where('phone_number', $users['phone_number']);
-    $query = $this->db->get('users');
-
-    if ($query->num_rows() > 0) { 
-         echo 'Duplicate entry, please login';
-        return false;
-    } else {
-        // Insert into users table
-        $this->db->insert('users', $users);
-        // Insert into login table
-        $this->db->insert('login', $login);
-        return true;
+        $this->db->where('email', $users['email']);
+        $this->db->or_where('phone_number', $users['phone_number']);
+        $query = $this->db->get('users');
+    
+        if ($query->num_rows() > 0) { 
+            return array(
+                'status' => 'error',
+                'message' => 'Duplicate entry, please login'
+            );
+        } else {
+            // Insert into users table
+            $user_insert = $this->db->insert('users', $users);
+            
+            // Insert into login table
+            $login_insert = $this->db->insert('login', $login);
+            
+            if ($user_insert && $login_insert) {
+                return array(
+                    'status' => 'success',
+                    'message' => 'User registered successfully'
+                );
+            } else {
+                return array(
+                    'status' => 'error',
+                    'message' => 'Failed to register user'
+                );
+            }
+        }
     }
-}
 
 
 	// checks if user exist in database to login
