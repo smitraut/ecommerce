@@ -8,6 +8,8 @@ application/logs/*
 
 !application/*/.htaccess
 
+/application/assets/images
+
 composer.lock
 tests/mocks/database/ci_test.sqlite
 

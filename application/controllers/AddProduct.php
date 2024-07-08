@@ -65,6 +65,44 @@ class AddProduct extends CI_Controller {
     }
 
 
+    public function addProductApp() {
+        header('Content-Type: application/json');
+    
+        // Configuration for file upload
+        $config['upload_path'] = FCPATH . 'application/assets/images/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $config['max_size'] = 2048; // 2MB max
+        $config['encrypt_name'] = TRUE;
+    
+        $this->upload->initialize($config);
+    
+        // Check if file upload is successful
+        if (!$this->upload->do_upload('product_image')) {
+            $error = $this->upload->display_errors();
+            echo json_encode(['status' => 'error', 'message' => $error]);
+            return;
+        }
+    
+        // File uploaded successfully, retrieve file data
+        $upload_data = $this->upload->data();
+        $products['product_image'] = $upload_data['file_name']; // Save file name to database
+    
+        // Get other form data
+        $products['product_name'] = $this->input->post('product_name');
+        $products['product_price'] = $this->input->post('product_price');
+        $products['product_description'] = $this->input->post('product_description');
+    
+        // Save product data to database
+        $response = $this->first_model->saveProduct($products);
+    
+        if ($response) {
+            echo json_encode(['status' => 'success', 'message' => 'Product added successfully']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to add product']);
+        }
+    }
+
+
 
 }
     
