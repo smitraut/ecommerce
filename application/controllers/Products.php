@@ -64,8 +64,8 @@ class Products extends CI_Controller {
 				// Add image URL to each product
 				$image_base_url = base_url('application/assets/images/');
 				foreach ($products as &$product) {
-					if (isset($product['image'])) {
-						$product['image_url'] = $image_base_url . $product['image'];
+					if (isset($product['product_image'])) {
+						$product['image_url'] = $image_base_url . $product['product_image'];
 					}
 				}
 	
