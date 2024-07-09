@@ -76,4 +76,15 @@ class first_model extends CI_Model {
 		$query = $this->db->get('users');
 		return $query->result_array();
 	}
+
+    //detete user from db
+    function deleteData($id) {
+        $this->db->where("id", $id);
+        $this->db->delete("users");
+        return true;
+    }
+
+
+
+
 }

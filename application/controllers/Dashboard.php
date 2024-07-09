@@ -67,5 +67,21 @@ class Dashboard extends CI_Controller {
             ->set_output(json_encode($response));
     }
 
+    public function deleteUser($id) {
+        $response=$this->first_model->deleteData($id);
+        if($response==true){
+            echo "User deleted successfully !";
+            redirect('dashboard');
+        }
+        else{
+            echo "Error !";
+        }
+    }
+
+    public function editUser($id) {
+     
+    }
+
+
 
 }
