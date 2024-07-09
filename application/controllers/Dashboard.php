@@ -78,8 +78,40 @@ class Dashboard extends CI_Controller {
         }
     }
 
-    public function editUser($id) {
-     
+      // Method to fetch user data and load the edit view
+      public function getUser($id) {
+        try {
+            $user = $this->first_model->getUserById($id);
+            if ($user) {
+                echo json_encode($user);
+            } else {
+                // Handle case when user is not found
+                echo json_encode(['error' => 'User not found']);
+            }
+        } catch (Exception $e) {
+            // Log the exception and return an error message
+            log_message('error', $e->getMessage());
+            echo json_encode(['error' => 'An error occurred']);
+        }
+    }
+    
+
+    // Method to update user data
+    public function updateUser() {
+        $id = $this->input->post('id');
+        $data = array(
+            'first_name' => $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+            'email' => $this->input->post('email'),
+            'phone_number' => $this->input->post('phone_number'),
+            'password' => $this->input->post('password')
+        );
+
+        // Update the user data
+        $this->first_model->updateUser($id, $data);
+
+        // Redirect to a success page or back to the list
+        redirect('dashboard');
     }
 
 

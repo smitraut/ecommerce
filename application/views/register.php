@@ -4,89 +4,118 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Register - ShopEase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        .register-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px); /* Adjust based on your navbar and footer height */
+            padding: 2rem;
+        }
+        .register-card {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .register-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+        .form-control::placeholder {
+            color: #999;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #4F46E5;
+        }
+        .btn-register {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-register:hover {
+            background-color: #4338CA;
+        }
+        .login-link {
+            margin-top: 1.5rem;
+            color: #555;
+        }
+        .login-link a {
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  
+
 <?php $this->load->view('../components/navbar'); ?>
 
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
-        <div class="card text-black" style="border-radius: 25px;">
-          <div class="card-body p-md-5">
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-
-                <form class="mx-1 mx-md-4" method="post" action="<?= base_url() ?>Register/registerUsersErp" >
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input name="first_name"  id="first_name" type="text" placeholder="First Name" class="form-control" required />
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input name="last_name" id="last_name" type="text" placeholder="Last Name" class="form-control" required />
-                    </div>
-                  </div>
-
-                  
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input name="phone_number" id="phone_number" type="tel" placeholder="Phone Number" class="form-control" required />
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input name="email" id="email" type="email" placeholder="Email" class="form-control" required />
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input name="password" id="password" type="password" placeholder="Password"  class="form-control" required />
-                    </div>
-                  </div>
-
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button  class="btn btn-primary btn-lg" type="submit" value="Submit">Register</button>
-                  </div>
-
-                  <div class="form-check d-flex justify-content-center mb-5">
-                      Already registered?&nbsp;<a href="<?php echo base_url(); ?>Login">Login</a>
-                  </div>
-
-             
-
-                </form>
-
-              </div>
-              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-              <img src="<?php echo base_url(); ?>application/assets/images/draw1.jpeg"
-                  class="img-fluid" alt="Sample image">
-
-              </div>
+<div class="register-container">
+    <div class="register-card">
+        <h1 class="register-title">Create an Account</h1>
+        <form action="<?= base_url() ?>Register/registerUsersErp" method="post">
+            <div class="form-group">
+                <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" required>
             </div>
-          </div>
-        </div>
-      </div>
+            <div class="form-group">
+                <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" id="phone_number" name="phone_number" class="form-control" placeholder="Phone Number" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email Address" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn-register">Create Account</button>
+        </form>
+        <p class="login-link">Already have an account? <a href="<?php echo base_url(); ?>Login">Log in</a></p>
     </div>
-  </div>
-</section>
+</div>
 
 <?php $this->load->view('../components/footer'); ?>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </body>
 </html>

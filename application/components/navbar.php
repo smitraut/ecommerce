@@ -12,12 +12,15 @@
     .navbar-toggler:focus {
         box-shadow: none;
     }
+    .navbar navbar-expand-lg navbar-dark bg-dark {
+
+    }
 </style>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#" style="color: #00BFFF;">Ecommerce</a>
+        <a class="navbar-brand" href="#" style="color: #4F46E5;">Ecommerce</a>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>

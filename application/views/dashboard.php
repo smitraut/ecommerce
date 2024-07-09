@@ -119,6 +119,14 @@
         .btn-delete:hover {
             background-color: #DC2626;
         }
+
+        .icon-spacing {
+        margin-right: 10px; 
+        }
+
+
+    /* EDIT POPUP MODAL */
+    
         .modal {
             display: none;
             position: fixed;
@@ -129,6 +137,7 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
         }
+
         .modal-content {
             background-color: white;
             border-radius: 10px;
@@ -139,27 +148,76 @@
             transform: translate(-50%, -50%);
             padding: 2rem;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .modal-title {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
+            color: #4a4a4a; /* Match the title color with your dashboard */
         }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #4a4a4a; /* Match label color with your dashboard */
+        }
+
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #6366F1; /* Match focus color with your dashboard */
+        }
+
         .modal-buttons {
             display: flex;
             justify-content: center;
             gap: 1rem;
             margin-top: 1.5rem;
         }
-        .no-users {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem;
-            background-color: white;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            color: #6B7280;
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
         }
+
+        .btn-edit {
+            background-color: #10B981;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #059669;
+        }
+
+        .btn-delete {
+            background-color: #EF4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #DC2626;
+        }
+
+
+       
     </style>
 </head>
 <body>
@@ -197,19 +255,19 @@
                 </div>
                 <div class="user-card-body">
                     <p class="user-info">
-                        <i class="fas fa-envelope"></i>
+                        <i class="fas fa-envelope icon-spacing"></i>
                         <?php echo $user['email']; ?>
                     </p>
                     <p class="user-info">
-                        <i class="fas fa-phone"></i>
+                        <i class="fas fa-phone icon-spacing"></i>
                         <?php echo $user['phone_number']; ?>
                     </p>
                     <!-- Add more fields as needed -->
                 </div>
                 <div class="user-card-footer">
-                    <a href="<?php echo base_url('Dashboard/editUser/' . $user['id']); ?>" class="btn btn-edit">
+                    <button onclick="openEditModal(<?php echo $user['id']; ?>)" class="btn btn-edit">
                         <i class="fas fa-edit"></i> Edit
-                    </a>
+                    </button>
                     <button onclick="openDeleteModal(<?php echo $user['id']; ?>)" class="btn btn-delete">
                         <i class="fas fa-trash-alt"></i> Delete
                     </button>
@@ -219,6 +277,39 @@
     <?php else : ?>
         <p class="no-users">No users found. Click the "Add New User" button to get started!</p>
     <?php endif; ?>
+    </div>
+</div>
+
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h2 class="modal-title">Edit User</h2>
+        <form id="editUserForm" method="post" action="<?php echo base_url('Dashboard/updateUser'); ?>">
+            <input type="hidden" name="id" id="editUserId">
+            <div class="form-group">
+                <label for="editFirstName">First Name:</label>
+                <input type="text" id="editFirstName" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="editLastName">Last Name:</label>
+                <input type="text" id="editLastName" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="editEmail">Email:</label>
+                <input type="email" id="editEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="editPhoneNumber">Phone Number:</label>
+                <input type="text" id="editPhoneNumber" name="phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="editPassword">Password:</label>
+                <input type="text" id="editPassword" name="password">
+            </div>
+            <div class="modal-buttons">
+                <button type="button" onclick="closeEditModal()" class="btn btn-edit">Cancel</button>
+                <button type="submit" class="btn btn-save">Save</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -237,6 +328,36 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 <script>
+    function openEditModal(userId) {
+        fetch('<?php echo base_url('Dashboard/getUser/'); ?>' + userId)
+            .then(response => response.json())
+            .then(user => {
+                if (user.error) {
+                    alert(user.error); // Show error message to the user
+                    return;
+                }
+                document.getElementById('editUserId').value = user.id;
+                document.getElementById('editFirstName').value = user.first_name;
+                document.getElementById('editLastName').value = user.last_name;
+                document.getElementById('editEmail').value = user.email;
+                document.getElementById('editPhoneNumber').value = user.phone_number;
+                document.getElementById('editPassword').value = user.password;
+
+                var modal = document.getElementById('editModal');
+                modal.style.display = "block";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while fetching the user data.');
+            });
+    }
+
+
+    function closeEditModal() {
+        var modal = document.getElementById('editModal');
+        modal.style.display = "none";
+    }
+
     function openDeleteModal(userId) {
         var modal = document.getElementById('deleteModal');
         var deleteLink = document.getElementById('deleteUserLink');
@@ -250,11 +371,16 @@
     }
 
     window.onclick = function(event) {
-        var modal = document.getElementById('deleteModal');
-        if (event.target == modal) {
-            modal.style.display = "none";
+        var editModal = document.getElementById('editModal');
+        var deleteModal = document.getElementById('deleteModal');
+        if (event.target == editModal) {
+            editModal.style.display = "none";
+        }
+        if (event.target == deleteModal) {
+            deleteModal.style.display = "none";
         }
     }
 </script>
 </body>
 </html>
+

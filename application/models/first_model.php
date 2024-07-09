@@ -84,6 +84,25 @@ class first_model extends CI_Model {
         return true;
     }
 
+    //fetch user data from db
+    public function getUserById($id) {
+        $this->db->where('id', $id);
+        $query = $this->db->get('users');
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return false; // Return false if user not found
+        }
+    }
+    
+    
+
+    //update user data
+    function updateUser($id, $data) {
+        $this->db->where('id', $id);
+        $this->db->update('users', $data);
+    }
+
 
 
 
