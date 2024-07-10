@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopEase - Our Products</title>
+    <title>ShopEase</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -153,7 +153,7 @@
                         <h2 class="product-name"><?php echo $product['product_name']; ?></h2>
                         <p class="product-description"><?php echo substr($product['product_description'], 0, 100) . '...'; ?></p>
                         <p class="product-price">₹<?php echo number_format($product['product_price'], 2); ?></p>
-                        <a href="#" class="btn">Add to Cart</a>
+                        <a href="#" class="btn add-to-cart" data-product-id="<?php echo $product['id']; ?>">Add to Cart</a>
                         <a href="#" class="btn btn-wishlist"><i class="far fa-heart"></i></a>
                     </div>
                 </div>
@@ -167,5 +167,32 @@
 <?php $this->load->view('../components/footer'); ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.add-to-cart').on('click', function(e) {
+        e.preventDefault();
+        var productId = $(this).data('product-id');
+        
+        $.ajax({
+            url: '<?php echo base_url("Products/addToCart"); ?>',
+            method: 'POST',
+            data: { product_id: productId },
+            dataType: 'json',
+            success: function(response) {
+                if(response.status === 'success') {
+                    alert('Product added to cart successfully!');
+                    // You can update the cart icon or count here if needed
+                } else {
+                    alert('Failed to add product to cart. Please try again.');
+                }
+            },
+            error: function() {
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+});
+</script> -->
 </body>
 </html>

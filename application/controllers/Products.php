@@ -89,7 +89,23 @@ class Products extends CI_Controller {
 	}
 	
 
-
+	// //add to cart
+	// public function addToCart() {
+	// 	$product_id = $this->input->post('product_id');
+		
+	// 	// You might want to check if the user is logged in here
+	// 	// $user_id = $this->session->userdata('user_id');
+		
+	// 	$result = $this->first_model->add_to_cart($product_id);
+		
+	// 	if($result) {
+	// 		$response = array('status' => 'success');
+	// 	} else {
+	// 		$response = array('status' => 'error');
+	// 	}
+		
+	// 	echo json_encode($response);
+	// }
 
 	
 

@@ -103,6 +103,22 @@ class first_model extends CI_Model {
     }
 
 
+    //Add to cart
+    // public function add_to_cart($product_id) {
+    //     // Here you would typically:
+    //     // 1. Check if the product is already in the cart
+    //     // 2. If it is, increase the quantity
+    //     // 3. If not, add it to the cart
+        
+    //     // This is a simplified version:
+    //     $data = array(
+    //         'product_id' => $product_id,
+    //         'quantity' => 1
+    //     );
+        
+    //     return $this->db->insert('cart', $data);
+    // }
+
 
 
 }
