@@ -17,7 +17,6 @@
        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
         }
         .hero-section {
             background: linear-gradient(135deg, #6366F1, #A855F7);

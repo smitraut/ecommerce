@@ -16,7 +16,6 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
         }
         .dashboard-header {
             display: flex;
@@ -127,94 +126,132 @@
 
     /* EDIT POPUP MODAL */
     
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
 
-        .modal-content {
-            background-color: white;
-            border-radius: 10px;
-            width: 400px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #4a4a4a; /* Match the title color with your dashboard */
-        }
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 24px !important;
+    width: 90%;
+    max-width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease;
+}
 
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
+@keyframes slideIn {
+    from { transform: translate(-50%, -60%); opacity: 0; }
+    to { transform: translate(-50%, -50%); opacity: 1; }
+}
 
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #4a4a4a; /* Match label color with your dashboard */
-        }
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+    text-align: center;
+}
 
-        .form-group input {
-            width: calc(100% - 20px);
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #6366F1; /* Match focus color with your dashboard */
-        }
+.form-group {
+    flex: 1;
+    margin-bottom: 1rem;
+}
 
-        .modal-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
+.form-group input:focus {
+    outline: none;
+    border-color: #4F46E5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    background-color: #ffffff;
+}
 
-        .btn-edit {
-            background-color: #10B981;
-            color: white;
-        }
+.form-group input::placeholder {
+    color: #adb5bd;
+}
 
-        .btn-edit:hover {
-            background-color: #059669;
-        }
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
 
-        .btn-delete {
-            background-color: #EF4444;
-            color: white;
-        }
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
 
-        .btn-delete:hover {
-            background-color: #DC2626;
-        }
+.btn-cancel {
+    background-color: #f1f3f5;
+    color: #495057;
+}
+
+.btn-cancel:hover {
+    background-color: #e9ecef;
+}
+
+.btn-save {
+    background-color: #4F46E5;
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.1);
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1.5rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .btn {
+        padding: 0.6rem 1.2rem;
+    }
+}
 
 
        
@@ -226,10 +263,10 @@
 
 <div class="container">
     <div class="dashboard-header">
-        <h1 class="dashboard-title">User Management</h1>
+        <!-- <h1 class="dashboard-title">User Management</h1>
         <button class="add-user-btn">
             <i class="fas fa-plus-circle"></i> Add New User
-        </button>
+        </button> -->
     </div>
 
     <?php if ($this->session->flashdata('success')) : ?>
@@ -265,10 +302,10 @@
                     <!-- Add more fields as needed -->
                 </div>
                 <div class="user-card-footer">
-                    <button onclick="openEditModal(<?php echo $user['id']; ?>)" class="btn btn-edit">
+                    <button onclick="openEditModal(<?php echo $user['id']; ?>)" class="btn btn-success">
                         <i class="fas fa-edit"></i> Edit
                     </button>
-                    <button onclick="openDeleteModal(<?php echo $user['id']; ?>)" class="btn btn-delete">
+                    <button onclick="openDeleteModal(<?php echo $user['id']; ?>)" class="btn btn-danger">
                         <i class="fas fa-trash-alt"></i> Delete
                     </button>
                 </div>
@@ -282,32 +319,29 @@
 
 <div id="editModal" class="modal">
     <div class="modal-content">
-        <h2 class="modal-title">Edit User</h2>
+        <!-- <h2 class="modal-title">Edit User</h2> -->
         <form id="editUserForm" method="post" action="<?php echo base_url('Dashboard/updateUser'); ?>">
             <input type="hidden" name="id" id="editUserId">
-            <div class="form-group">
-                <label for="editFirstName">First Name:</label>
-                <input type="text" id="editFirstName" name="first_name" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="text" id="editFirstName" name="first_name" required placeholder="First Name">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="editLastName" name="last_name" required placeholder="Last Name">
+                </div>
             </div>
             <div class="form-group">
-                <label for="editLastName">Last Name:</label>
-                <input type="text" id="editLastName" name="last_name" required>
+                <input type="email" id="editEmail" name="email" required placeholder="Email">
             </div>
             <div class="form-group">
-                <label for="editEmail">Email:</label>
-                <input type="email" id="editEmail" name="email" required>
+                <input type="tel" id="editPhoneNumber" name="phone_number" required placeholder="Phone Number">
             </div>
             <div class="form-group">
-                <label for="editPhoneNumber">Phone Number:</label>
-                <input type="text" id="editPhoneNumber" name="phone_number" required>
+                <input type="text" id="editPassword" name="password" required placeholder="Password">
             </div>
-            <div class="form-group">
-                <label for="editPassword">Password:</label>
-                <input type="text" id="editPassword" name="password">
-            </div>
-            <div class="modal-buttons">
-                <button type="button" onclick="closeEditModal()" class="btn btn-edit">Cancel</button>
-                <button type="submit" class="btn btn-save">Save</button>
+            <div class="form-actions">
+                <button type="button" onclick="closeEditModal()" class="btn btn-success">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
         </form>
     </div>
@@ -318,8 +352,8 @@
         <h2 class="modal-title">Confirm Deletion</h2>
         <p>Are you sure you want to delete this user? This action cannot be undone.</p>
         <div class="modal-buttons">
-            <button onclick="closeDeleteModal()" class="btn btn-edit">Cancel</button>
-            <a id="deleteUserLink" href="#" class="btn btn-delete">Delete</a>
+            <button onclick="closeDeleteModal()" class="btn btn-success">Cancel</button>
+            <a id="deleteUserLink" href="#" class="btn btn-danger">Delete</a>
         </div>
     </div>
 </div>
@@ -329,28 +363,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 <script>
     function openEditModal(userId) {
-        fetch('<?php echo base_url('Dashboard/getUser/'); ?>' + userId)
-            .then(response => response.json())
-            .then(user => {
-                if (user.error) {
-                    alert(user.error); // Show error message to the user
-                    return;
-                }
-                document.getElementById('editUserId').value = user.id;
-                document.getElementById('editFirstName').value = user.first_name;
-                document.getElementById('editLastName').value = user.last_name;
-                document.getElementById('editEmail').value = user.email;
-                document.getElementById('editPhoneNumber').value = user.phone_number;
-                document.getElementById('editPassword').value = user.password;
+    fetch('<?php echo base_url('Dashboard/getUser/'); ?>' + userId)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(user => {
+            if (user.error) {
+                console.error('Server returned an error:', user.error);
+                alert('Error: ' + user.error);
+                return;
+            }
+            console.log('User data received:', user);
+            document.getElementById('editUserId').value = user.id;
+            document.getElementById('editFirstName').value = user.first_name;
+            document.getElementById('editLastName').value = user.last_name;
+            document.getElementById('editEmail').value = user.email;
+            document.getElementById('editPhoneNumber').value = user.phone_number;
+            document.getElementById('editPassword').value = user.password;
 
-                var modal = document.getElementById('editModal');
-                modal.style.display = "block";
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while fetching the user data.');
-            });
-    }
+            var modal = document.getElementById('editModal');
+            modal.style.display = "block";
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('An error occurred while fetching the user data: ' + error.message);
+        });
+}
 
 
     function closeEditModal() {

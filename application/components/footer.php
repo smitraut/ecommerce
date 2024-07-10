@@ -10,10 +10,16 @@
         .footer {
             flex-shrink: 0;
         }
+
+       .foooter {
+            padding: 25px;
+       }
 </style>
+
 
 <body class="d-flex flex-column h-100">
     <footer class="footer mt-auto bg-dark text-light py-4">
+        <div class="foooter">
         <div class="container text-center">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -30,5 +36,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </footer>
 </body>

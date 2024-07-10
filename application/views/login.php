@@ -18,8 +18,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 100px);
-            padding: 2rem;
+            padding: 8rem;
         }
         .login-card {
             background-color: white;

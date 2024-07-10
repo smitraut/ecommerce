@@ -78,6 +78,7 @@
         }
         .btn:hover {
             background-color: #4F46E5;
+            color: white !important;
         }
         .btn-wishlist {
             background-color: transparent;

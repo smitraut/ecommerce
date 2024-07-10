@@ -94,8 +94,7 @@ class first_model extends CI_Model {
             return false; // Return false if user not found
         }
     }
-    
-    
+      
 
     //update user data
     function updateUser($id, $data) {

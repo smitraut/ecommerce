@@ -10,7 +10,7 @@
         }
         .card {
             border: none;
-            border-radius: 15px;
+            border-radius: 75px !important;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         .card-body {
@@ -63,7 +63,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center fw-bold mb-5">Add Product</h1>
-                    <form method="post" action="<?= base_url('AddProduct'); ?>" enctype="multipart/form-data">
+                    <form method="post" action="<?= base_url('AddProduct/addProduct'); ?>" enctype="multipart/form-data">
                         <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Product Name" required />
 
                         <input type="number" name="product_price" id="product_price" class="form-control" step="0.01" placeholder="Price" required />

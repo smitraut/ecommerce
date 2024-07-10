@@ -18,7 +18,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 100px); /* Adjust based on your navbar and footer height */
+            min-height: calc(50vh - 50px); 
             padding: 2rem;
         }
         .register-card {
