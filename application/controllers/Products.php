@@ -89,12 +89,12 @@ class Products extends CI_Controller {
 	}
 	
 
-	// //add to cart
+	//add to cart
 	// public function addToCart() {
 	// 	$product_id = $this->input->post('product_id');
 		
 	// 	// You might want to check if the user is logged in here
-	// 	// $user_id = $this->session->userdata('user_id');
+	// 	$user_id = $this->session->userdata('user_id');
 		
 	// 	$result = $this->first_model->add_to_cart($product_id);
 		

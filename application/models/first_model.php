@@ -103,7 +103,7 @@ class first_model extends CI_Model {
     }
 
 
-    //Add to cart
+    // Add to cart
     // public function add_to_cart($product_id) {
     //     // Here you would typically:
     //     // 1. Check if the product is already in the cart

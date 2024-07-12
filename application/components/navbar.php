@@ -46,6 +46,17 @@
         width: 20px;
         margin-right: 10px;
     }
+
+    .cart-count {
+    background-color: #4F46E5;
+    color: white;
+    border-radius: 50%;
+    padding: 0.2em 0.5em;
+    font-size: 0.8em;
+    position: relative;
+    top: -10px;
+    left: -5px;
+}
 </style>
 
 <!-- Navbar -->
@@ -83,6 +94,12 @@
                         <a class="nav-link" href="<?php echo base_url('Register'); ?>" style="color: #FFFFFF;">Register</a>
                     </li>
                 <?php endif; ?>
+                <li class="nav-item">
+    <a class="nav-link" href="#" onclick="viewCart()" style="color: #FFFFFF;">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </a>
+</li>
             </ul>
         </div>
         
@@ -132,6 +149,11 @@
                     </a>
                 </li>
             <?php endif; ?>
+            <li class="nav-item">
+    <a class="nav-link" href="#" onclick="viewCart()">
+        <i class="fas fa-shopping-cart"></i> Cart <span class="cart-count">0</span>
+    </a>
+</li>
         </ul>
     </div>
 </div>
