@@ -103,21 +103,55 @@ class first_model extends CI_Model {
     }
 
 
-    // Add to cart
-    // public function add_to_cart($product_id) {
-    //     // Here you would typically:
-    //     // 1. Check if the product is already in the cart
-    //     // 2. If it is, increase the quantity
-    //     // 3. If not, add it to the cart
+    //Add to cart
+    public function add_to_cart($cart_data) {
+        $this->db->where('id', $cart_data['id']);
+        $query = $this->db->get('cart');
         
-    //     // This is a simplified version:
-    //     $data = array(
-    //         'product_id' => $product_id,
-    //         'quantity' => 1
-    //     );
-        
-    //     return $this->db->insert('cart', $data);
-    // }
+        if ($query->num_rows() > 0) { 
+            // Product already in cart, update quantity
+            $existing_item = $query->row_array();
+            $this->db->where('id', $existing_item['id']);
+            $this->db->set('quantity', 'quantity+1', FALSE);
+            $this->db->update('cart');
+            
+            return array(
+                'status' => 'success',
+                'message' => 'Item quantity updated in cart'
+            );
+        } else {
+            // Insert new item into cart
+            $cart_insert = $this->db->insert('cart', $cart_data);
+            
+            if ($cart_insert) {
+                return array(
+                    'status' => 'success',
+                    'message' => 'Item added to cart'
+                );
+            } else {
+                return array(
+                    'status' => 'error',
+                    'message' => 'Failed to add the item'
+                );
+            }
+        }
+    }
+    
+    public function get_cart_count() {
+        return $this->db->count_all_results('cart');
+    }
+
+    // GET ALL USERS FROM DATABASE
+	function getCart() {
+		$query = $this->db->get('cart');
+		return $query->result_array();
+	}
+
+    //delete cart items
+    public function deleteItem($itemId) {
+        $this->db->where('id', $itemId);
+        return $this->db->delete('cart');
+    }
 
 
 

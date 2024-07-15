@@ -153,7 +153,12 @@
                         <h2 class="product-name"><?php echo $product['product_name']; ?></h2>
                         <p class="product-description"><?php echo substr($product['product_description'], 0, 100) . '...'; ?></p>
                         <p class="product-price">₹<?php echo number_format($product['product_price'], 2); ?></p>
-                        <a href="#" class="btn add-to-cart" data-product-id="<?php echo $product['id']; ?>" data-product-name="<?php echo $product['product_name']; ?>" data-product-price="<?php echo $product['product_price']; ?>">Add to Cart</a>                        <a href="#" class="btn btn-wishlist"><i class="far fa-heart"></i></a>
+                        <a href="#" class="btn add-to-cart" 
+                            data-product-id="<?php echo $product['id']; ?>" 
+                            data-product-name="<?php echo $product['product_name']; ?>" 
+                            data-product-price="<?php echo $product['product_price']; ?>"
+                            data-product-image="<?php echo $product['product_image']; ?>">Add to Cart</a>
+                        <a href="#" class="btn btn-wishlist"><i class="far fa-heart"></i></a>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -166,45 +171,46 @@
 <?php $this->load->view('../components/footer'); ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-javascriptCopy<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-    // Initialize an empty cart
-    let cart = [];
-
     $('.add-to-cart').on('click', function(e) {
         e.preventDefault();
         var productId = $(this).data('product-id');
         var productName = $(this).data('product-name');
         var productPrice = $(this).data('product-price');
+        var productImage = $(this).data('product-image');
+
         
-        // Add the product to the cart
-        cart.push({
-            id: productId,
-            name: productName,
-            price: productPrice,
-            quantity: 1
+        $.ajax({
+            url: '<?php echo base_url("Products/addToCart"); ?>',
+            method: 'POST',
+            data: { 
+                product_id: productId,
+                product_name: productName,
+                product_price: productPrice,
+                product_image: productImage
+            },
+            dataType: 'json',
+            success: function(response) {
+                if(response.status === 'success') {
+                    alert('Product added to cart successfully!');
+                    updateCartUI(response.cart_count);
+                } else {
+                    alert('Failed to add product to cart. ' + response.message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("AJAX Error: ", textStatus, errorThrown);
+                console.log("Response Text: ", jqXHR.responseText);
+                alert('An error occurred. Please try again.');
+            }
         });
-
-        // Update the UI
-        updateCartUI();
-
-        // Show a success message
-        alert('Product added to cart successfully!');
     });
 
-    function updateCartUI() {
-        // Update the cart count
-        $('.cart-count').text(cart.length);
-
-        // You can add more UI updates here, like updating a dropdown cart preview
+    function updateCartUI(cartCount) {
+        $('.cart-count').text(cartCount);
     }
-
-    // Optional: Add a function to view the cart contents
-    window.viewCart = function() {
-        console.log('Cart contents:', cart);
-        alert('Cart contents logged to console. Check browser developer tools.');
-    };
 });
 </script>
 </body>

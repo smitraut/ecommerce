@@ -57,6 +57,7 @@ $route['products'] = 'products/displayProducts';
 $route['dashboard'] = 'dashboard/displayUsers';
 $route['AddProduct'] = 'AddProduct/addProduct';
 $route['Products'] = 'Products/displayProducts';
+$route['Cart'] = 'Cart/displayCart';
 
 
 

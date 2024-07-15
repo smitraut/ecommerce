@@ -87,26 +87,38 @@ class Products extends CI_Controller {
 			->set_content_type('application/json')
 			->set_output(json_encode($response));
 	}
-	
+
 
 	//add to cart
-	// public function addToCart() {
-	// 	$product_id = $this->input->post('product_id');
-		
-	// 	// You might want to check if the user is logged in here
-	// 	$user_id = $this->session->userdata('user_id');
-		
-	// 	$result = $this->first_model->add_to_cart($product_id);
-		
-	// 	if($result) {
-	// 		$response = array('status' => 'success');
-	// 	} else {
-	// 		$response = array('status' => 'error');
-	// 	}
-		
-	// 	echo json_encode($response);
-	// }
+	public function addToCart()
+{
+    if ($this->input->is_ajax_request()) {
+        $product_id = $this->input->post('product_id');
+        $product_name = $this->input->post('product_name');
+        $product_price = $this->input->post('product_price');
+        $product_image = $this->input->post('product_image');
 
+        // Validate the price
+        if ($product_price === null || $product_price === '') {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid price']);
+            return;
+        }
+
+        $cart_data = array(
+            'id' => $product_id,
+            'name' => $product_name,
+            'price' => floatval($product_price),  // Convert to float
+            'product_image' => $product_image,
+            'quantity' => 1
+        );
+
+        $result = $this->first_model->add_to_cart($cart_data);
+
+        echo json_encode($result);
+    } else {
+        show_404();
+    }
+}
 	
 
 }

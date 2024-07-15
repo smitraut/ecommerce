@@ -86,6 +86,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('Logout/logout'); ?>" style="color: #FFFFFF;">Logout</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo base_url('#'); ?>" style="color: #FFFFFF;">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('Cart'); ?>">
+                            <i class="fas fa-shopping-cart"></i>                        </a>
+                    </li>
                 <?php else : ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('Login'); ?>" style="color: #FFFFFF;">Login</a>
@@ -94,19 +101,13 @@
                         <a class="nav-link" href="<?php echo base_url('Register'); ?>" style="color: #FFFFFF;">Register</a>
                     </li>
                 <?php endif; ?>
-                <li class="nav-item">
-    <a class="nav-link" href="#" onclick="viewCart()" style="color: #FFFFFF;">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count">0</span>
-    </a>
-</li>
             </ul>
         </div>
         
         <!-- Mobile Navigation -->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Ecommerce Menu</h5>
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">ShopEase</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -137,6 +138,16 @@
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('#'); ?>">
+                    <i class="fa-solid fa-basket-shopping"></i> Your Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('Cart'); ?>">
+                        <i class="fas fa-shopping-cart"></i> Cart
+                    </a>
+                </li>
             <?php else : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url('Login'); ?>">
@@ -149,11 +160,6 @@
                     </a>
                 </li>
             <?php endif; ?>
-            <li class="nav-item">
-    <a class="nav-link" href="#" onclick="viewCart()">
-        <i class="fas fa-shopping-cart"></i> Cart <span class="cart-count">0</span>
-    </a>
-</li>
         </ul>
     </div>
 </div>
