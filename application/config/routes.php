@@ -58,6 +58,6 @@ $route['dashboard'] = 'dashboard/displayUsers';
 $route['AddProduct'] = 'AddProduct/addProduct';
 $route['Products'] = 'Products/displayProducts';
 $route['Cart'] = 'Cart/displayCart';
-
+$route['cart/updateQuantity/(:num)/(:num)'] = 'cart/updateQuantity/$1/$2';
 
 

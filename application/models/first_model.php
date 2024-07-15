@@ -153,6 +153,23 @@ class first_model extends CI_Model {
         return $this->db->delete('cart');
     }
 
+    //cart quantiyu change
+    public function updateQuantity($itemId, $newQuantity) {
+        $this->db->where('id', $itemId);
+        $this->db->update('cart', array('quantity' => $newQuantity));
+        
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getCartItem($itemId) {
+        $this->db->where('id', $itemId);
+        $query = $this->db->get('cart');
+        return $query->row_array();
+    }
 
 
 }

@@ -84,14 +84,15 @@
                         <a class="nav-link" href="<?php echo base_url('dashboard'); ?>" style="color: #FFFFFF;">Dashboard</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<?php echo base_url('Orders'); ?>" style="color: #FFFFFF;">Orders</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('Logout/logout'); ?>" style="color: #FFFFFF;">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('#'); ?>" style="color: #FFFFFF;">Orders</a>
-                    </li>
-                    <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url('Cart'); ?>">
-                            <i class="fas fa-shopping-cart"></i>                        </a>
+                            <i class="fas fa-shopping-cart"></i>                        
+                    </a>
                     </li>
                 <?php else : ?>
                     <li class="nav-item">
@@ -134,13 +135,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url('Logout/logout'); ?>">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                    <a class="nav-link" href="<?php echo base_url('Orders'); ?>">
+                    <i class="fa-solid fa-basket-shopping"></i> Orders
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url('#'); ?>">
-                    <i class="fa-solid fa-basket-shopping"></i> Your Orders
+                    <a class="nav-link" href="<?php echo base_url('Logout/logout'); ?>">
+                        <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                 </li>
                 <li class="nav-item">

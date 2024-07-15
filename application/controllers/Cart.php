@@ -70,7 +70,42 @@ class Cart extends CI_Controller {
 		// Redirect back to the cart page
 		redirect('Cart');
 	}
+
+	//cart quantity change
+	public function updateQuantity($itemId, $newQuantity) {
+		$this->load->model('first_model');
 	
+		$itemId = intval($itemId);
+		$newQuantity = intval($newQuantity);
+	
+		if ($itemId <= 0 || $newQuantity < 0) {
+			echo json_encode(['success' => false, 'message' => 'Invalid input']);
+			return;
+		}
+	
+		$success = $this->first_model->updateQuantity($itemId, $newQuantity);
+	
+		if ($success) {
+			$updatedItem = $this->first_model->getCartItem($itemId);
+	
+			if ($updatedItem) {
+				$price = floatval($updatedItem['price']);
+				$subtotal = $price * $newQuantity;
+	
+				echo json_encode([
+					'success' => true,
+					'message' => 'Quantity updated successfully',
+					'newQuantity' => $newQuantity,
+					'price' => $price,
+					'subtotal' => number_format($subtotal, 2)
+				]);
+			} else {
+				echo json_encode(['success' => false, 'message' => 'Failed to retrieve updated item']);
+			}
+		} else {
+			echo json_encode(['success' => false, 'message' => 'Failed to update quantity']);
+		}
+	}	
 
 
 

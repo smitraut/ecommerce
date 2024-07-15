@@ -69,7 +69,11 @@
         }
         .price {
             font-weight: 600;
-            color: #4CAF50;
+            color: #4F46E5;
+        }
+        .ttprice {
+            font-weight: 600;
+            color: blue;
         }
         .btn-buy-now {
             background-color: #4CAF50;
@@ -193,6 +197,33 @@
                 padding: 0.6rem 1.2rem;
             }
         }
+
+
+        .quantity-controls {
+        display: flex;
+        align-items: center;
+    }
+    .btn-quantity {
+        background-color: #f1f3f5;
+        border: none;
+        color: #495057;
+        font-size: 18px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    .btn-quantity:hover {
+        background-color: #e9ecef;
+    }
+    .quantity {
+        margin: 0 10px;
+        font-size: 16px;
+    }
     </style>
 </head>
 <body>
@@ -202,23 +233,29 @@
         <?php if (!empty($cart)) : ?>
             <div class="product-grid">
                 <?php foreach ($cart as $item) : ?>
-                    <div class="product-card">
+                    <div class="product-card" data-item-id="<?php echo htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8'); ?>">
                         <div class="product-info">
-                            <img src="<?php echo base_url('application/assets/images/' . (isset($item['product_image']) ? $item['product_image'] : 'default.jpg')); ?>" class="product-image" alt="<?php echo $item['name']; ?>">
-                            <h2 class="name"><?php echo $item['name']; ?></h2>
+                            <img src="<?php echo base_url('application/assets/images/' . (isset($item['product_image']) ? htmlspecialchars($item['product_image'], ENT_QUOTES, 'UTF-8') : 'default.jpg')); ?>" class="product-image" alt="<?php echo htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <h2 class="name"><?php echo htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8'); ?></h2>
                             <div class="details">
-                                <span class="price">₹<?php echo number_format($item['price'], 2); ?></span>
-                                <span class="quantity">Qty: <?php echo $item['quantity']; ?></span>
+                                <span class="price">₹<?php echo number_format($item['price'] * $item['quantity'], 2); ?></span>
+                                <div class="quantity-controls">
+                                    <button class="btn-quantity" data-change="-1">-</button>
+                                    <span class="quantity" id="quantity-<?php echo htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($item['quantity'], ENT_QUOTES, 'UTF-8'); ?></span>
+                                    <button class="btn-quantity" data-change="1">+</button>
+                                </div>
                             </div>
                             <div class="user-card-footer">
-                                <button class="btn btn-danger" onclick="openDeleteModal(<?php echo $item['id']; ?>)">
+                                <button class="btn btn-danger" data-item-id="<?php echo htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8'); ?>">
                                     <i class="fas fa-trash-alt"></i> Delete
                                 </button>
                             </div>
                         </div>
                     </div>
-                    
                 <?php endforeach; ?>
+            </div>
+            <div class="cart-summary">
+                <h3>Cart Total: <span id="cart-grand-total">0.00</span></h3>
             </div>
             <button class="btn-buy-now">Buy Now</button>
         <?php else : ?>
@@ -226,42 +263,112 @@
         <?php endif; ?>
     </div>
 
-     <div id="deleteModal" class="modal">
+    <div id="deleteModal" class="modal">
         <div class="modal-content">
             <h2 class="modal-title">Confirm Deletion</h2>
             <p>Are you sure you want to delete this item from your cart? This action cannot be undone.</p>
             <div class="modal-buttons">
-                <button onclick="closeDeleteModal()" class="btn btn-success">Cancel</button>
+                <button id="cancelDelete" class="btn btn-success">Cancel</button>
                 <a id="deleteItemLink" href="#" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </div>
-    
 
     <?php $this->load->view('../components/footer'); ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
-        function openDeleteModal(itemId) {
-            var modal = document.getElementById('deleteModal');
-            var deleteLink = document.getElementById('deleteItemLink');
-            deleteLink.href = "cart/deleteCartItem/" + itemId;
-            modal.style.display = "block";
-        }
+function openDeleteModal(itemId) {
+    const modal = document.getElementById('deleteModal');
+    const deleteLink = document.getElementById('deleteItemLink');
+    deleteLink.href = "<?php echo base_url('cart/deleteCartItem/'); ?>" + itemId;
+    modal.style.display = "block";
+}
 
-        function closeDeleteModal() {
-            var modal = document.getElementById('deleteModal');
-            modal.style.display = "none";
-        }
+function closeDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    modal.style.display = "none";
+}
 
-        window.onclick = function(event) {
-            var modal = document.getElementById('deleteModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
+function updateQuantity(itemId, change) {
+    const quantityElement = document.getElementById('quantity-' + itemId);
+    const currentQuantity = parseInt(quantityElement.textContent);
+    const newQuantity = currentQuantity + change;
+    
+    if (newQuantity > 0) {
+        fetch('<?php echo base_url("cart/updateQuantity/"); ?>' + itemId + '/' + newQuantity, {
+            method: 'POST'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                quantityElement.textContent = data.newQuantity;
+                updateItemPrice(itemId, data.price, data.newQuantity);
+                updateCartTotal();
+            } else {
+                alert('Failed to update quantity. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
+}
+
+function updateItemPrice(itemId, price, quantity) {
+    const priceElement = document.querySelector(`.product-card[data-item-id="${itemId}"] .price`);
+    const newTotal = (price * quantity).toFixed(2);
+    const formattedTotal = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(newTotal);
+    priceElement.textContent = formattedTotal;
+}
+
+
+function updateCartTotal() {
+    const prices = document.querySelectorAll('.price');
+    let grandTotal = 0;
+    prices.forEach(price => {
+        grandTotal += parseFloat(price.textContent.replace('₹', '').replace(/,/g, ''));
+    });
+    const formattedTotal = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(grandTotal);
+    document.getElementById('cart-grand-total').textContent = formattedTotal;
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach event listeners to buttons
+    document.querySelectorAll('.btn-quantity').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.closest('.product-card').dataset.itemId;
+            const change = parseInt(this.dataset.change);
+            updateQuantity(itemId, change);
+        });
+    });
+
+    document.querySelectorAll('.btn-danger').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.itemId;
+            openDeleteModal(itemId);
+        });
+    });
+
+    document.getElementById('cancelDelete').addEventListener('click', closeDeleteModal);
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('deleteModal');
+        if (event.target == modal) {
+            closeDeleteModal();
         }
+    }
 
-    </script>
-
+    // Initial cart total update
+    updateCartTotal();
+});
+</script>
 </body>
 </html>
