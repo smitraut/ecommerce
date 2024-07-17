@@ -59,5 +59,5 @@ $route['AddProduct'] = 'AddProduct/addProduct';
 $route['Products'] = 'Products/displayProducts';
 $route['Cart'] = 'Cart/displayCart';
 $route['cart/updateQuantity/(:num)/(:num)'] = 'cart/updateQuantity/$1/$2';
-
+$route['cart/deleteItem/(:num)'] = 'cart/deleteItem/$1';
 

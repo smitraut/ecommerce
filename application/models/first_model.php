@@ -149,8 +149,11 @@ class first_model extends CI_Model {
 
     //delete cart items
     public function deleteItem($itemId) {
+        log_message('debug', 'Model: Attempting to delete item: ' . $itemId);
         $this->db->where('id', $itemId);
-        return $this->db->delete('cart');
+        $result = $this->db->delete('cart');
+        log_message('debug', 'Model: Delete result: ' . ($result ? 'true' : 'false'));
+        return $result;
     }
 
     //cart quantiyu change

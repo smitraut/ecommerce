@@ -54,21 +54,20 @@ class Cart extends CI_Controller {
 	}
 
 	//delete cart items
-	public function deleteCartItem($itemId) {
-		// Load cart model
+	public function deleteItem($itemId) {
 		$this->load->model('first_model');
+		
+		log_message('debug', 'Attempting to delete item: ' . $itemId);
+		
+		$success = $this->first_model->deleteItem($itemId);
 	
-		// Call model function to delete the item
-		$result = $this->first_model->deleteItem($itemId);
-	
-		if ($result) {
-			$this->session->set_flashdata('success', 'Item deleted successfully.');
+		if ($success) {
+			log_message('debug', 'Item deleted successfully: ' . $itemId);
+			$this->output->set_content_type('application/json')->set_output(json_encode(['success' => true, 'message' => 'Item deleted successfully']));
 		} else {
-			$this->session->set_flashdata('error', 'Failed to delete the item.');
+			log_message('error', 'Failed to delete item: ' . $itemId);
+			$this->output->set_content_type('application/json')->set_output(json_encode(['success' => false, 'message' => 'Failed to delete item']));
 		}
-	
-		// Redirect back to the cart page
-		redirect('Cart');
 	}
 
 	//cart quantity change
